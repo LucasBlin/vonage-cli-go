@@ -20,6 +20,9 @@ jobs:
         name: Set up Go
         uses: actions/setup-go@v4
       -
+        name: Build
+        run: go build -v ./cmd/app/main.go
+      -
         name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
