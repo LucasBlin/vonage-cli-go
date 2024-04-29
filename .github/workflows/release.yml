@@ -31,7 +31,5 @@ jobs:
         uses: goreleaser/goreleaser-action@v4
         with:
           version: latest
-          # Specify the path to main.go in the environment variable
-          args: --main ./cmd/app/main.go
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Required for GoReleaser to publish releases
