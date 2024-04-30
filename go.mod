@@ -1,6 +1,6 @@
 module lucas.blin/v2
 
-go 1.21.6
+go 1.21
 
 require (
 	github.com/fatih/color v1.16.0
