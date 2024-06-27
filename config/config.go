@@ -6,8 +6,10 @@ import (
 	"path/filepath"
 )
 
-func GetConfig(section string, key string, mandatory bool) (string, error) {
-	cfg, err := load()
+var Url = "https://rest.nexmo.com/sms/json"
+
+func GetConfig(section string, key string, mandatory bool, path string) (string, error) {
+	cfg, err := load(path)
 	if err != nil {
 		return "", SilentError{}
 	}
@@ -21,10 +23,10 @@ func GetConfig(section string, key string, mandatory bool) (string, error) {
 	return Key, nil
 }
 
-func SetConfig(section string, key string, input string) error {
-	cfg, err := load()
+func SetConfig(section string, key string, input string, path string) error {
+	cfg, err := load(path)
 
-	config, err := GetConfig(section, key, false)
+	config, err := GetConfig(section, key, false, path)
 	if err != nil {
 		return err
 	}
@@ -36,7 +38,7 @@ func SetConfig(section string, key string, input string) error {
 	}
 
 	cfg.Section(section).Key(key).SetValue(input)
-	err = cfg.SaveTo(home("~/.config/parameters.ini"))
+	err = cfg.SaveTo(home(path))
 	if err != nil {
 		Red("⚠️ Could not save the configuration file. ⚠️")
 		return err
@@ -44,8 +46,8 @@ func SetConfig(section string, key string, input string) error {
 	return nil
 }
 
-func load() (*ini.File, error) {
-	cfg, err := ini.Load(home("~/.config/parameters.ini"))
+func load(path string) (*ini.File, error) {
+	cfg, err := ini.Load(home(path))
 	if err != nil {
 		Red("⚠️ Could not load the configuration file. ⚠️")
 		return nil, SilentError{}
