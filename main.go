@@ -8,13 +8,14 @@ import (
 
 type ArgT struct {
 	cli.Helper
-	Recipient  string `cli:"recipient,r" usage:"short and long format flags both are supported"`
-	Sender     string `cli:"sender,s" usage:"short and long format flags both are supported"`
-	Message    string `cli:"message,m" usage:"short and long format flags both are supported"`
-	Secret     string `cli:"secret" usage:"short and long format flags both are supported"`
-	Key        string `cli:"key" usage:"short and long format flags both are supported"`
-	Contact    string `cli:"add-contact,add" usage:"short and long format flags both are supported"`
-	ConfigPath string `cli:"config-path" usage:"short and long format flags both are supported"`
+	Recipient     string `cli:"recipient,r" usage:"short and long format flags both are supported"`
+	Sender        string `cli:"sender,s" usage:"short and long format flags both are supported"`
+	Message       string `cli:"message,m" usage:"short and long format flags both are supported"`
+	Secret        string `cli:"secret" usage:"short and long format flags both are supported"`
+	Key           string `cli:"key" usage:"short and long format flags both are supported"`
+	Contact       string `cli:"add-contact,add" usage:"short and long format flags both are supported"`
+	ConfigPath    string `cli:"config-path" usage:"short and long format flags both are supported"`
+	ImportContact string `cli:"import-file,import" usage:"short and long format flags both are supported"`
 }
 
 func main() {
@@ -35,6 +36,11 @@ func RunCli(argv *ArgT) error {
 		if err != nil {
 			return err
 		}
+		return nil
+	}
+
+	if argv.ImportContact != "" {
+		config.Vcf_parser(argv.ImportContact, argv.ConfigPath)
 		return nil
 	}
 

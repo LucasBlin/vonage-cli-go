@@ -16,7 +16,7 @@ func GetConfig(section string, key string, mandatory bool, path string) (string,
 
 	Key := cfg.Section(section).Key(key).String()
 	if Key == "" && mandatory {
-		Red("⚠️ Please set " + key + " in parameters.ini file ⚠️")
+		Red("⚠️ Please set " + key + " in " + path + " file")
 		return "", SilentError{}
 	}
 
@@ -31,16 +31,16 @@ func SetConfig(section string, key string, input string, path string) error {
 		return err
 	}
 	if err != nil {
-		Red("⚠️ Error getting the configuration: " + err.Error() + "⚠️")
+		Red("⚠️ Error getting the configuration: " + err.Error())
 		return err
 	} else if config != "" {
-		Yellow("⚠️ The key already exists, previous value will be overwritten : " + config + "  ⚠️")
+		Yellow("⚠️ The key already exists, previous value will be overwritten : " + config)
 	}
 
 	cfg.Section(section).Key(key).SetValue(input)
 	err = cfg.SaveTo(home(path))
 	if err != nil {
-		Red("⚠️ Could not save the configuration file. ⚠️")
+		Red("⚠️ Could not save the configuration file.")
 		return err
 	}
 	return nil
